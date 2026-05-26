@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>МИРЭА | Управление уборкой</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <main id="app">
+    <section class="login-shell" id="loginView">
+      <div class="login-media">
+        <div>
+          <p class="eyebrow">РТУ МИРЭА</p>
+          <h1>Система управления уборкой помещений</h1>
+          <p>Задания, чек-листы, фотоотчеты, проверки качества и аналитика в одном рабочем интерфейсе.</p>
+        </div>
+      </div>
+      <form class="login-panel" id="loginForm">
+        <div>
+          <p class="eyebrow">Вход</p>
+          <h2>Рабочий кабинет</h2>
+        </div>
+        <label>
+          Логин
+          <input name="login" value="supervisor" autocomplete="username">
+        </label>
+        <label>
+          Пароль
+          <input name="password" value="supervisor123" type="password" autocomplete="current-password">
+        </label>
+        <button class="primary" type="submit">Войти</button>
+        <div class="demo-users">
+          <button type="button" data-login="admin" data-password="admin123">Администратор</button>
+          <button type="button" data-login="supervisor" data-password="supervisor123">Ответственный</button>
+          <button type="button" data-login="cleaner" data-password="cleaner123">Сотрудник</button>
+        </div>
+        <p class="form-error" id="loginError"></p>
+      </form>
+    </section>
+
+    <section class="workspace hidden" id="workspace">
+      <aside class="sidebar">
+        <div class="brand">
+          <span class="brand-mark">М</span>
+          <div>
+            <strong>CleanOps</strong>
+            <small>МИРЭА</small>
+          </div>
+        </div>
+        <nav id="nav">
+          <button data-view="dashboard" class="active">Сводка</button>
+          <button data-view="tasks">Задания</button>
+          <button data-view="quality">Проверка</button>
+          <button data-view="reports">Отчеты</button>
+          <button data-view="audit">Журнал</button>
+        </nav>
+        <div class="user-box">
+          <span id="userName"></span>
+          <small id="userRole"></small>
+          <button id="logoutBtn" class="ghost">Выйти</button>
+        </div>
+      </aside>
+
+      <section class="content">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow" id="todayLabel"></p>
+            <h1 id="pageTitle">Сводка</h1>
+          </div>
+          <div class="actions">
+            <button class="secondary" id="refreshBtn">Обновить</button>
+            <button class="primary supervisor-only" id="openTaskForm">Создать задание</button>
+          </div>
+        </header>
+
+        <section id="dashboardView" class="view active"></section>
+        <section id="tasksView" class="view"></section>
+        <section id="qualityView" class="view"></section>
+        <section id="reportsView" class="view"></section>
+        <section id="auditView" class="view"></section>
+      </section>
+    </section>
+
+    <dialog id="taskDialog">
+      <form method="dialog" class="dialog-panel" id="taskForm">
+        <div class="dialog-head">
+          <h2>Новое задание</h2>
+          <button class="icon-button" value="cancel" type="button" data-close-dialog>×</button>
+        </div>
+        <label>Название<input name="title" required value="Плановая уборка помещения"></label>
+        <label>Описание<textarea name="description" rows="3">Выполнить уборку по стандарту помещения и передать отчет на проверку.</textarea></label>
+        <div class="grid two">
+          <label>Помещение<select name="room_id" id="roomSelect"></select></label>
+          <label>Исполнитель<select name="assigned_to" id="assigneeSelect"></select></label>
+        </div>
+        <div class="grid two">
+          <label>Срок<input name="deadline" type="date" required></label>
+          <label>Приоритет
+            <select name="priority">
+              <option value="medium">Средний</option>
+              <option value="high">Высокий</option>
+              <option value="critical">Критический</option>
+              <option value="low">Низкий</option>
+            </select>
+          </label>
+        </div>
+        <label>Пункты чек-листа<textarea name="items" rows="4">Удалить мусор и заменить пакет
+Протереть рабочие поверхности
+Вымыть пол
+Проверить расходные материалы</textarea></label>
+        <div class="dialog-actions">
+          <button type="button" class="ghost" data-close-dialog>Отмена</button>
+          <button type="submit" class="primary">Сохранить</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="taskDetailDialog">
+      <div class="dialog-panel wide">
+        <div class="dialog-head">
+          <h2 id="detailTitle">Задание</h2>
+          <button class="icon-button" type="button" data-close-detail>×</button>
+        </div>
+        <div id="taskDetail"></div>
+      </div>
+    </dialog>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>
